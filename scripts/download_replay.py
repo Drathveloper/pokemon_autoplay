@@ -5,7 +5,7 @@ import requests
 
 base_url = "https://replay.pokemonshowdown.com"
 replay_list_url = base_url + "/api/replays/search?username=&format={}&page={}&sort={}"
-default_workspace = '/home/drath/.poke_ws'
+default_workspace = os.environ['WORKSPACE_ENV']
 battle_format = 'gen9randombattle'
 replay_pages = 100
 replays_per_page = 50

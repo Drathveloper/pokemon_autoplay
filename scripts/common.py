@@ -5,7 +5,7 @@ import sys
 
 workspace_env_key = 'POKEMON_WORKSPACE'
 
-default_workspace = '/home/drath/.poke_ws'
+default_workspace = os.environ['WORKSPACE_ENV']
 
 
 def setup_dir(ws):
