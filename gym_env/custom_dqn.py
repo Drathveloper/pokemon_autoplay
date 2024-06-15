@@ -5,7 +5,7 @@ from gymnasium import spaces
 from stable_baselines3 import DQN
 from stable_baselines3.common.noise import ActionNoise
 
-from gym import helpers
+from gym_env import helpers
 
 
 class CustomDQN(DQN):

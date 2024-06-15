@@ -9,7 +9,7 @@ from typing import List, Optional, Tuple
 from poke_env.environment import Battle, AbstractBattle
 from poke_env.data import GenData
 
-from gym.reward import RewardValues
+from gym_env.reward import RewardValues
 from replays.replay import Replay
 
 

@@ -6,8 +6,8 @@ from gymnasium.core import ActType, ObsType
 from gymnasium.vector.utils import spaces
 from poke_env.environment import Battle
 
-from gym import helpers
-from gym.reward import RewardValues
+from gym_env import helpers
+from gym_env.reward import RewardValues
 from replays.replay import Replay
 
 

@@ -3,16 +3,15 @@ import os
 
 from stable_baselines3.dqn import MlpPolicy
 
-from gym.custom_dqn import CustomDQN
-from gym.replay_environment import ReplayEnv
-from gym.episodes_callback import StopTrainingOnEpisodesCallback
-from gym.reward import RewardValues
-from gym.simple_agents_environment import RLSimpleAgentsEnv
+from gym_env.custom_dqn import CustomDQN
+from gym_env.replay_environment import ReplayEnv
+from gym_env.episodes_callback import StopTrainingOnEpisodesCallback
+from gym_env.reward import RewardValues
+from gym_env.simple_agents_environment import RLSimpleAgentsEnv
 from replays.replay_processor import ReplayProcessor
 
 
 def main():
-
     replay_agent_episodes = int(os.environ['NUM_REPLAY_EPISODES'])
     replay_agent_steps = replay_agent_episodes * 50
     simple_agent_episodes = int(os.environ['NUM_SIMPLE_AGENTS_EPISODES'])

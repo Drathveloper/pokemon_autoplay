@@ -7,9 +7,9 @@ from poke_env import RandomPlayer, SimpleHeuristicsPlayer, Player
 from poke_env.environment import AbstractBattle
 from poke_env.player import EnvPlayer, BattleOrder, ForfeitBattleOrder
 
-from gym import helpers
-from gym.player import MaxDamagePlayer
-from gym.reward import RewardValues
+from gym_env import helpers
+from gym_env.player import MaxDamagePlayer
+from gym_env.reward import RewardValues
 
 
 class RLSimpleAgentsEnv(EnvPlayer[ObsType, ActType], ABC):
