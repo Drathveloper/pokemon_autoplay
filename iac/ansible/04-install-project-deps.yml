@@ -1,0 +1,26 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Ensure deps installed
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - nodejs
+        - npm
+        - python3
+        - python3-venv
+      when: ansible_os_family == "Debian"
+
+    - name: Execute npm install
+      command: npm install
+      args:
+        chdir: /home/debian/pokemon-showdown
+
+    - name: Create python venv
+      command: python3 -m venv /home/debian/pokemon_autoplay/.venv
+
+    - name: Pip install deps
+      pip:
+        requirements: /home/debian/pokemon_autoplay/requirements.txt
+        virtualenv: /home/debian/pokemon_autoplay/.venv

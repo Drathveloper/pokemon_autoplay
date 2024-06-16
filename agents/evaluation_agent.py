@@ -1,14 +1,19 @@
 import asyncio
+import os
 
 from poke_env import RandomPlayer, SimpleHeuristicsPlayer
 from stable_baselines3 import DQN
+from stable_baselines3.common.logger import configure
 
 from gym_env.player import MaxDamagePlayer
 from gym_env.simple_agents_environment import RLSimpleAgentsEnv
 
 
 async def evaluate(env_player):
-    model = DQN.load("/home/drath/repos/pokemon_tfg/out/new_model_11.zip")
+    logs_path = "/out/logs/"
+    logger = configure(logs_path, ["stdout", "csv", "tensorboard"])
+    model = DQN.load(os.environ['MODEL_PATH'])
+    model.set_logger(logger=logger)
     for i in range(1, 100):
         obs, reward, done, _, info = env_player.step(0)
         while not done:

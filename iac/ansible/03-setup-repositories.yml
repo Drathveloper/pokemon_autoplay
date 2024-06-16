@@ -1,0 +1,28 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Ensure Git installed
+      apt:
+        name: git
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Clone Pokemon-Showdown repository
+      git:
+        repo: 'https://github.com/smogon/pokemon-showdown.git'
+        dest: /home/debian/pokemon-showdown
+        version: 'master'
+        update: yes
+
+    - name: Clone Pokemon-Autoplay repository
+      git:
+        repo: 'https://github.com/Drathveloper/pokemon_autoplay.git'
+        dest: /home/debian/pokemon_autoplay
+        version: 'master'
+        update: yes
+
+    - name: Configure Pokemon-Showdown
+      copy:
+        src: ./sd_config/config.js
+        dest: /home/debian/pokemon-showdown/config/config.js
+
