@@ -48,6 +48,7 @@ async def evaluate(name, env_player, model_path):
 async def main():
     model_dir = os.environ['MODEL_PATH']
     model_file_names = [f for f in os.listdir(model_dir) if os.path.isfile(os.path.join(model_dir, f)) and f.endswith(".zip")]
+    model_file_names = sorted(model_file_names)
     for model_file in model_file_names:
         model_name = model_file.split('.')[0]
         with open(f"{model_dir}/{model_name}.metadata") as metadata_file:
