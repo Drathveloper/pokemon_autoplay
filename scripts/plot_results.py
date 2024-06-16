@@ -12,7 +12,7 @@ def plot_rewards_bar(title, data, axis):
 
 
 def plot_success_bar(title, data, axis):
-    axis.bar(data['model'], data['success_rate'], label='Success Rate', alpha=0.7)
+    axis.bar(data['model'], data['success_rate'], label='Success Rate', alpha=0.7, color='g')
     axis.set_title(title)
     axis.set_ylabel('Win Ratio')
     axis.legend()
@@ -20,7 +20,7 @@ def plot_success_bar(title, data, axis):
 
 
 def plot_variance_bar(title, data, axis):
-    axis.bar(data['model'], data['variance_reward'], label='Variance Reward', alpha=0.7)
+    axis.bar(data['model'], data['variance_reward'], label='Variance Reward', alpha=0.7, color='r')
     axis.set_title(title)
     axis.set_ylabel('Variance')
     axis.legend()
