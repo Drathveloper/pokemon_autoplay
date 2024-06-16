@@ -4,18 +4,16 @@ import os
 import numpy as np
 from poke_env import RandomPlayer, SimpleHeuristicsPlayer
 from stable_baselines3 import DQN
-from stable_baselines3.common.logger import configure
 
 from gym_env.player import MaxDamagePlayer
+from gym_env.reward import RewardValues
 from gym_env.simple_agents_environment import RLSimpleAgentsEnv
 
 
 async def evaluate(name, env_player, model_path):
     logs_path = "../out/logs/"
     gamma = 0.99
-    logger = configure(logs_path, ["stdout", "csv"])
     model = DQN.load(model_path)
-    model.set_logger(logger=logger)
     total_rewards = []
     discounted_rewards = []
     for i in range(1, 100):
@@ -52,13 +50,22 @@ async def main():
     model_file_names = [f for f in os.listdir(model_dir) if os.path.isfile(os.path.join(model_dir, f)) and f.endswith(".zip")]
     for model_file in model_file_names:
         model_name = model_file.split('.')[0]
-        print('Evaluating model ' + model_file)
-        env_player = RLSimpleAgentsEnv(player=RandomPlayer())
-        await evaluate(model_name, env_player, model_dir + '/' + model_file)
-        env_player = RLSimpleAgentsEnv(player=MaxDamagePlayer())
-        await evaluate(model_name, env_player, model_dir + '/' + model_file)
-        env_player = RLSimpleAgentsEnv(player=SimpleHeuristicsPlayer())
-        await evaluate(model_name, env_player, model_dir + '/' + model_file)
+        with open(f"{model_dir}/{model_name}.metadata") as metadata_file:
+            metadata = metadata_file.readline().replace('\n', '').split('|')
+            reward_values = RewardValues(
+                fainted_value=float(metadata[0]),
+                hp_value=float(metadata[1]),
+                status_value=float(metadata[2]),
+                invalid_action_value=float(metadata[3]),
+                victory_value=float(metadata[4])
+            )
+            print('Evaluating model ' + model_file)
+            env_player = RLSimpleAgentsEnv(player=RandomPlayer(), reward_values=reward_values)
+            await evaluate(model_name, env_player, model_dir + '/' + model_file)
+            env_player = RLSimpleAgentsEnv(player=MaxDamagePlayer(), reward_values=reward_values)
+            await evaluate(model_name, env_player, model_dir + '/' + model_file)
+            env_player = RLSimpleAgentsEnv(player=SimpleHeuristicsPlayer(), reward_values=reward_values)
+            await evaluate(model_name, env_player, model_dir + '/' + model_file)
 
 
 if __name__ == "__main__":
